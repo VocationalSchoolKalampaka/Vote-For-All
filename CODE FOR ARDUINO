@@ -1,0 +1,48 @@
+
+Servo servo1; // πάνω servo
+Servo servo2; // κάτω servo
+
+const int btn1 = 6; // πάνω κουμπί
+const int btn2 = 5; // μεσαίο κουμπί
+const int btnR = 3; // κάτω κουμπί (reset)
+
+int pos1 = 0;  // αρχική θέση
+int pos2 = 0;  // αρχική θέση
+
+void setup() {
+  servo1.attach(11);   // σήμα πάνω servo
+  servo2.attach(10);   // σήμα κάτω servo
+
+  pinMode(btn1, INPUT);
+  pinMode(btn2, INPUT);
+  pinMode(btnR, INPUT);
+
+  servo1.write(pos1);
+  servo2.write(pos2);
+}
+
+void loop() {
+
+  // Κουμπί 1 -> Servo 1 +1°
+  if (digitalRead(btn1) == HIGH) {
+    if (pos1 < 180) pos1++;
+    servo1.write(pos1);
+    delay(1000);
+  }
+
+  // Κουμπί 2 -> Servo 2 +1°
+  if (digitalRead(btn2) == HIGH) {
+    if (pos2 < 180) pos2++;
+    servo2.write(pos2);
+    delay(1000);
+  }
+
+  // Κουμπί 3 -> RESET (0° και τα δύο)
+  if (digitalRead(btnR) == HIGH) {
+    pos1 = 0;
+    pos2 = 0;
+    servo1.write(pos1);
+    servo2.write(pos2);
+    delay(1000);
+  }
+}
